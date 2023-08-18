@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 3 Concepts Demo</title>
+  <script src="https://unpkg.com/vue@3.2.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Vue 3 Concepts Demo</h1>
+    
+    <!-- Conditional Rendering -->
+    <div>
+      <h2>Conditional Rendering</h2>
+      <p v-if="showMessage">This is a message displayed using v-if.</p>
+      <p v-else>This message is displayed when v-if condition is false.</p>
+      
+      <p v-show="showMessageWithVShow">This is a message displayed using v-show.</p>
+    </div>
+    
+    <!-- List Rendering -->
+    <div>
+      <h2>List Rendering</h2>
+      <ul>
+        <li v-for="(item, index) in items" :key="index">{{ item }}</li>
+      </ul>
+    </div>
+    
+    <!-- Conditional Rendering with v-for -->
+    <div>
+      <h2>Conditional Rendering with v-for</h2>
+      <ul>
+        <li v-for="item in itemsWithConditionalRender" :key="item.id">
+          {{ item.name }}
+          <span v-if="item.stock > 0"> - In Stock</span>
+          <span v-else> - Out of Stock</span>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Form Input Handling -->
+    <div>
+      <h2>Form Input Handling</h2>
+      <label for="inputText">Enter some text: </label>
+      <input type="text" id="inputText" v-model="inputValue">
+      <p>You entered: {{ inputValue }}</p>
+    </div>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          showMessage: true,
+          showMessageWithVShow: true,
+          items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
+          itemsWithConditionalRender: [
+            { id: 1, name: 'Product A', stock: 5 },
+            { id: 2, name: 'Product B', stock: 0 },
+            { id: 3, name: 'Product C', stock: 10 },
+          ],
+          inputValue: '',
+        };
+      },
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
+

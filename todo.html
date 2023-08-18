@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Set character encoding -->
+  <meta charset="UTF-8">
+  <!-- Configure initial viewport settings for responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Define the webpage title -->
+  <title>Todo App</title>
+  <style>
+    /* Global styles for body and layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Styling for the main container of the todo app */
+    .todo-container {
+      width: 300px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling for the todo list */
+    .todo-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    /* Styling for individual todo items */
+    .todo-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    /* Styling for completed todo items */
+    .todo-item.completed {
+      background-color: #f4f4f4;
+    }
+
+    /* Styling for the delete button on todo items */
+    .delete-button {
+      color: #ff0000;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    /* Styling for the delete button on hover */
+    .delete-button:hover {
+      color: #aa0000;
+    }
+
+    /* Styling for the add todo form */
+    .add-todo-form {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    /* Styling for the add todo input */
+    .add-todo-input {
+      flex: 1;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Styling for the add todo button */
+    .add-todo-button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    /* Styling for the add todo button on hover */
+    .add-todo-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main todo app container -->
+  <div id="app" class="todo-container">
+    <!-- Todo app title -->
+    <h2>Todo App</h2>
+    <!-- Todo list -->
+    <ul class="todo-list">
+      <!-- Loop through todos and display each todo item -->
+      <li v-for="(todo, index) in todos" :key="index" :class="{ 'todo-item': true, 'completed': todo.completed }">
+        {{ todo.text }}
+        <span class="delete-button" @click="deleteTodo(index)">X</span>
+      </li>
+    </ul>
+    <!-- Form to add new todos -->
+    <form class="add-todo-form" @submit.prevent="addTodo">
+      <input class="add-todo-input" v-model="newTodoText" placeholder="Add a new todo" />
+      <button class="add-todo-button">Add</button>
+    </form>
+  </div>
+
+  <!-- Load Vue.js library -->
+  <script src="https://unpkg.com/vue@3.2.11/dist/vue.global.js"></script>
+  <script>
+    // Create a new Vue application
+    const app = Vue.createApp({
+      // Data properties for the app
+      data() {
+        return {
+          todos: [],          // List of todos
+          newTodoText: '',    // Text for new todo
+        };
+      },
+      // Methods to handle actions
+      methods: {
+        // Add a new todo
+        addTodo() {
+          if (this.newTodoText.trim() !== '') {
+            this.todos.push({
+              text: this.newTodoText,
+              completed: false,
+            });
+            this.newTodoText = '';  // Reset input field
+          }
+        },
+        // Delete a todo item
+        deleteTodo(index) {
+          this.todos.splice(index, 1);
+        },
+      },
+    });
+
+    // Mount the Vue app to the element with ID "app"
+    app.mount('#app');
+  </script>
+</body>
+</html>
+
